@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelgeSound | Synchronized Loops</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background: #0f172a; 
+            color: #f8fafc; 
+            padding: 40px 20px; 
+        }
+        h1 { color: #38bdf8; margin-bottom: 10px; }
+        .description { color: #94a3b8; margin-bottom: 30px; }
+        
+        #startBtn { 
+            padding: 20px 40px; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            cursor: pointer; 
+            background: #0284c7; 
+            color: white; 
+            border: none; 
+            border-radius: 50px;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+        #startBtn:hover { background: #0ea5e9; transform: scale(1.05); }
+
+        #controls { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        .track-card { 
+            background: #1e293b; 
+            padding: 20px; 
+            border-radius: 15px; 
+            border: 1px solid #334155;
+            transition: border-color 0.3s;
+        }
+        
+        .mute-btn { 
+            width: 100%;
+            padding: 12px; 
+            cursor: pointer; 
+            background: #10b981; 
+            color: white; 
+            border: none; 
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .mute-btn.is-muted { 
+            background: #ef4444; 
+            opacity: 0.6;
+        }
+
+        .status { margin-top: 20px; font-size: 0.9rem; color: #64748b; }
+    </style>
+</head>
+<body>
+
+    <h1>HelgeSound Player</h1>
+    <p class="description">Interaktives Loop-System - Alle Spuren laufen exakt synchron.</p>
+
+    <button id="startBtn" onclick="startEngine()">SOUND-ENGINE STARTEN</button>
+
+    <div id="controls" style="display:none;">
+        </div>
+
+    <p class="status" id="loadingStatus"></p>
+
+    <script>
+        // 1. KONFIGURATION: Hier deine Dateinamen und Anzeigenamen anpassen
+        const tracksConfig = [
+            { name: "Drums / Beat", url: "audio/loop1.mp3" },
+            { name: "Bassline", url: "audio/loop2.mp3" },
+            { name: "Melodie", url: "audio/loop3.mp3" } // Du kannst einfach mehr hinzufügen!
+        ];
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let gainNodes = [];
+
+        async function startEngine() {
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('loadingStatus').innerText = "Lade Audio-Loops...";
+            
+            if (audioCtx.state === 'suspended') {
+                await audioCtx.resume();
+            }
+
+            // Zeitpuffer für den Start (0.5 Sekunden in der Zukunft)
+            const startTime = audioCtx.currentTime + 0.5;
+
+            try {
+                for (let i = 0; i < tracksConfig.length; i++) {
+                    await setupTrack(tracksConfig[i], i, startTime);
+                }
+                
+                document.getElementById('controls').style.display = 'grid';
+                document.getElementById('loadingStatus').innerText = "System läuft synchron.";
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loadingStatus').innerText = "Fehler beim Laden. Dateinamen prüfen!";
+            }
+        }
+
+        async function setupTrack(config, index, startTime) {
+            const response = await fetch(config.url);
+            const arrayBuffer = await response.arrayBuffer();
+            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = audioBuffer;
+            source.loop = true;
+
+            const gainNode = audioCtx.createGain();
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            // Mute-Logik initialisieren
+            gainNodes[index] = gainNode;
+
+            // UI Element erstellen
+            createUIElement(config.name, index);
+
+            // Alle Spuren zum exakt gleichen Zeitpunkt in der Zukunft starten
+            source.start(startTime);
+        }
+
+        function createUIElement(name, index) {
+            const container = document.getElementById('controls');
+            const div = document.createElement('div');
+            div.className = 'track-card';
+            div.innerHTML = `
+                <p style="margin-top:0">${name}</p>
+                <button id="btn-${index}" class="mute-btn" onclick="toggleMute(${index})">MUTE</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function toggleMute(index) {
+            const node = gainNodes[index];
+            const btn = document.getElementById(`btn-${index}`);
+            
+            if (node.gain.value > 0) {
+                node.gain.value = 0; // Lautstärke auf 0 (läuft synchron weiter)
+                btn.innerText = "UNMUTE";
+                btn.classList.add('is-muted');
+            } else {
+                node.gain.value = 1; // Lautstärke auf 100%
+                btn.innerText = "MUTE";
+                btn.classList.remove('is-muted');
+            }
+        }
+    </script>
+</body>
+</html>
