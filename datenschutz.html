@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelgeSound | Electronic Live Act</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./static/live-act-game.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/live-act-game.css">
+</head>
+
+<body class="bg-zinc-900 text-white">
+
+    <nav x-data="{ open: false }" class="fixed w-full z-50 bg-zinc-900/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-xl tracking-tighter hover:text-indigo-400 transition-colors">
+                        Helge - Live Electronics
+                    </a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <!--
+                        <a href="#home" class="hover:text-indigo-400 px-3 py-2 transition-colors">Home</a>
+                        <a href="#about" class="hover:text-indigo-400 px-3 py-2 transition-colors">About</a>
+                        -->
+                        <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-soundcloud"></i>
+                        </a>
+                        <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!--
+                <div class="md:hidden flex items-center">
+                    <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-800 focus:outline-none">
+                        <svg class="h-6 w-6" :class="{'hidden': open, 'block': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="h-6 w-6" :class="{'block': open, 'hidden': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="md:hidden bg-zinc-900 border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Home</a>
+                <a href="#loops" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Loops</a>
+            </div>
+        </div>
+    </nav>
+
+<main class="max-w-4xl mx-auto px-6 py-20">
+    <h1 class="text-3xl font-bold mb-8">Datenschutzerklärung</h1>
+
+    <section class="mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-zinc-300">1. Verantwortlicher</h2>
+        <p class="mb-4">Verantwortlicher für die Datenverarbeitung auf dieser Website ist:</p>
+        <div class="bg-zinc-800 p-6 rounded-lg border border-white/10 italic">
+            Helge Schneider<br>
+            Klarastraße 41<br>
+            79106 Freiburg im Breisgau<br>
+            E-Mail: <a href="mailto:hi@helgesound.de" class="text-indigo-400">hi@helgesound.de</a>
+        </div>
+    </section>
+
+    <section class="mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-zinc-300">2. Hosting und Zugriffsdaten</h2>
+        <p class="text-zinc-400 leading-relaxed">
+            Beim Aufruf unserer Website werden durch den Webserver automatisch Informationen in sogenannten Server-Log-Files erhoben. Dies umfasst Ihre IP-Adresse, Datum/Uhrzeit des Zugriffs, Browsertyp und das verwendete Betriebssystem. Diese Daten dienen rein dem technischen Betrieb und der Sicherheit der Seite. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am fehlerfreien Betrieb).
+        </p>
+    </section>
+
+    <section class="mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-zinc-300">3. Kontaktaufnahme</h2>
+        <p class="text-zinc-400 leading-relaxed">
+            Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (vertragliche/vorvertragliche Maßnahmen).
+        </p>
+    </section>
+
+    <section class="mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-zinc-300">4. Social Media & Externe Links</h2>
+        <p class="text-zinc-400 leading-relaxed">
+            Wir verlinken auf unsere Profile bei <strong>Instagram, YouTube und SoundCloud</strong>. Es handelt sich hierbei um einfache Hyperlinks. Erst wenn Sie die Links anklicken und die Plattformen der Drittanbieter besuchen, werden Daten (wie Ihre IP-Adresse) an die jeweiligen Betreiber übertragen. Wir haben keinen Einfluss auf die Datenverarbeitung durch diese Anbieter.
+        </p>
+    </section>
+
+    <section class="mb-10">
+        <h2 class="text-xl font-semibold mb-4 text-zinc-300">5. Ihre Rechte</h2>
+        <p class="mb-4 text-zinc-400">Sie haben jederzeit das Recht auf:</p>
+        <ul class="list-disc list-inside space-y-2 text-zinc-400">
+            <li><strong>Auskunft</strong> über Ihre bei uns gespeicherten Daten (Art. 15 DSGVO).</li>
+            <li><strong>Berichtigung</strong> unrichtiger Daten (Art. 16 DSGVO).</li>
+            <li><strong>Löschung</strong> Ihrer Daten, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen (Art. 17 DSGVO).</li>
+            <li><strong>Widerspruch</strong> gegen die Verarbeitung (Art. 21 DSGVO).</li>
+        </ul>
+        <p class="mt-4 text-zinc-400">
+            Bei Fragen wenden Sie sich bitte an die oben genannte Kontaktadresse. Zudem steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.
+        </p>
+    </section>
+</main>
+
+<footer class="bg-zinc-900 text-zinc-400 py-12 px-6 lg:px-8 border-t border-white/5">
+    <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
+
+        <div class="w-full py-10 border-b border-white/5">
+            <div class="flex justify-center space-x-10 text-xl">
+                <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+                <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                    <i class="fa-brands fa-soundcloud"></i>
+                </a>
+                <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="w-full pt-10 space-y-6">
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+                <a href="./impressum.html" class="hover:text-white">Impressum</a>
+                <a href="./datenschutz.html" class="hover:text-white">Datenschutz</a>
+            </div>
+        </div>
+        <div class="w-full pt-10 space-y-6">
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+                <span class="text-zinc-600">© 2026 HelgeSound</span>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>

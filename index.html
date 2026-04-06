@@ -1,165 +1,128 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelgeSound | Synchronized Loops</title>
-    <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            background: #0f172a; 
-            color: #f8fafc; 
-            padding: 40px 20px; 
-        }
-        h1 { color: #38bdf8; margin-bottom: 10px; }
-        .description { color: #94a3b8; margin-bottom: 30px; }
-        
-        #startBtn { 
-            padding: 20px 40px; 
-            font-size: 1.2rem; 
-            font-weight: bold;
-            cursor: pointer; 
-            background: #0284c7; 
-            color: white; 
-            border: none; 
-            border-radius: 50px;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
-        }
-        #startBtn:hover { background: #0ea5e9; transform: scale(1.05); }
+    <title>HelgeSound | Electronic Live Act</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./static/live-act-game.js"></script>
 
-        #controls { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; 
-            max-width: 800px; 
-            margin: 0 auto; 
-        }
-
-        .track-card { 
-            background: #1e293b; 
-            padding: 20px; 
-            border-radius: 15px; 
-            border: 1px solid #334155;
-            transition: border-color 0.3s;
-        }
-        
-        .mute-btn { 
-            width: 100%;
-            padding: 12px; 
-            cursor: pointer; 
-            background: #10b981; 
-            color: white; 
-            border: none; 
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-        
-        .mute-btn.is-muted { 
-            background: #ef4444; 
-            opacity: 0.6;
-        }
-
-        .status { margin-top: 20px; font-size: 0.9rem; color: #64748b; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/live-act-game.css">
 </head>
-<body>
 
-    <h1>HelgeSound Player</h1>
-    <p class="description">Interaktives Loop-System - Alle Spuren laufen exakt synchron.</p>
+<body class="bg-zinc-900 text-white">
 
-    <button id="startBtn" onclick="startEngine()">SOUND-ENGINE STARTEN</button>
+    <nav x-data="{ open: false }" class="fixed w-full z-50 bg-zinc-900/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-xl tracking-tighter hover:text-indigo-400 transition-colors">
+                        Helge - Live Electronics
+                    </a>
+                </div>
 
-    <div id="controls" style="display:none;">
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <!--
+                        <a href="#home" class="hover:text-indigo-400 px-3 py-2 transition-colors">Home</a>
+                        <a href="#about" class="hover:text-indigo-400 px-3 py-2 transition-colors">About</a>
+                        -->
+                        <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-brands fa-soundcloud"></i>
+                        </a>
+                        <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!--
+                <div class="md:hidden flex items-center">
+                    <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-800 focus:outline-none">
+                        <svg class="h-6 w-6" :class="{'hidden': open, 'block': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="h-6 w-6" :class="{'block': open, 'hidden': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                -->
+            </div>
         </div>
 
-    <p class="status" id="loadingStatus"></p>
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="md:hidden bg-zinc-900 border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Home</a>
+                <a href="#loops" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Loops</a>
+            </div>
+        </div>
+    </nav>
 
-    <script>
-        // 1. KONFIGURATION: Hier deine Dateinamen und Anzeigenamen anpassen
-        const tracksConfig = [
-            { name: "Drums / Beat", url: "audio/loop1.mp3" },
-            { name: "Bassline", url: "audio/loop2.mp3" },
-            { name: "Melodie", url: "audio/loop3.mp3" } // Du kannst einfach mehr hinzufügen!
-        ];
+    <main>
+        <section id="home" class="h-screen flex items-center justify-center bg-gradient-to-b from-zinc-800 to-zinc-900">
+            <img src="static/img/Tunnel_Scooter.JPG">
+        </section>
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let gainNodes = [];
+        <!--
+        <section id="about" class="h-screen flex items-center justify-center bg-zinc-900">
+            <h1 class="text-6xl font-black">Über</h1>
+            <br>
+            <p>
+                Helge macht Melodic Techno – aber nicht so, wie man ihn kennt. Mit einer selbstgezimmerten Zauberkiste voller analoger und digitaler Klangmaschinen spielt er ein technoides Konzert, das tief unter die Haut geht. Seine Klavierstücke dienen ihm dabei als Ausgangspunkt: Er interpretiert sie neu, zerlegt sie live und bringt den neuen Sound direkt auf der Tanzfläche.
+            </p>
+            <p>
+                Dabei begibt sich Helge in einen Flow der Improvisation und reagiert intuitiv auf die Stimmung im Raum - Mal sanft und hypnotisierend, mal kraftvoll und treibend. Zu den emotionalen Höhepunkten spielt er transzendierende Melodien mit seinem Tenor Saxophon über den Beat. So verschmilzt pure Elektro-Power mit expressiven Instrumenten zu einer intimen live Erfahrung – irgendwo zwischen Konzertsaal und Techno Floor.
+            </p>
+        </section>
+        -->
 
-        async function startEngine() {
-            document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('loadingStatus').innerText = "Lade Audio-Loops...";
-            
-            if (audioCtx.state === 'suspended') {
-                await audioCtx.resume();
-            }
+    </main>
+    <footer class="bg-zinc-900 text-zinc-400 py-12 px-6 lg:px-8 border-t border-white/5">
+        <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
 
-            // Zeitpuffer für den Start (0.5 Sekunden in der Zukunft)
-            const startTime = audioCtx.currentTime + 0.5;
+            <div class="w-full py-10 border-b border-white/5">
+                <div class="flex justify-center space-x-10 text-xl">
+                    <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                        <i class="fa-brands fa-soundcloud"></i>
+                    </a>
+                    <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
 
-            try {
-                for (let i = 0; i < tracksConfig.length; i++) {
-                    await setupTrack(tracksConfig[i], i, startTime);
-                }
-                
-                document.getElementById('controls').style.display = 'grid';
-                document.getElementById('loadingStatus').innerText = "System läuft synchron.";
-            } catch (err) {
-                console.error(err);
-                document.getElementById('loadingStatus').innerText = "Fehler beim Laden. Dateinamen prüfen!";
-            }
-        }
+            <div class="w-full pt-10 space-y-6">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+                    <a href="./impressum.html" class="hover:text-white">Impressum</a>
+                    <a href="./datenschutz.html" class="hover:text-white">Datenschutz</a>
+                </div>
+            </div>
+            <div class="w-full pt-10 space-y-6">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+                    <span class="text-zinc-600">© 2026 HelgeSound</span>
+                </div>
+            </div>
 
-        async function setupTrack(config, index, startTime) {
-            const response = await fetch(config.url);
-            const arrayBuffer = await response.arrayBuffer();
-            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-
-            const source = audioCtx.createBufferSource();
-            source.buffer = audioBuffer;
-            source.loop = true;
-
-            const gainNode = audioCtx.createGain();
-            source.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            // Mute-Logik initialisieren
-            gainNodes[index] = gainNode;
-
-            // UI Element erstellen
-            createUIElement(config.name, index);
-
-            // Alle Spuren zum exakt gleichen Zeitpunkt in der Zukunft starten
-            source.start(startTime);
-        }
-
-        function createUIElement(name, index) {
-            const container = document.getElementById('controls');
-            const div = document.createElement('div');
-            div.className = 'track-card';
-            div.innerHTML = `
-                <p style="margin-top:0">${name}</p>
-                <button id="btn-${index}" class="mute-btn" onclick="toggleMute(${index})">MUTE</button>
-            `;
-            container.appendChild(div);
-        }
-
-        function toggleMute(index) {
-            const node = gainNodes[index];
-            const btn = document.getElementById(`btn-${index}`);
-            
-            if (node.gain.value > 0) {
-                node.gain.value = 0; // Lautstärke auf 0 (läuft synchron weiter)
-                btn.innerText = "UNMUTE";
-                btn.classList.add('is-muted');
-            } else {
-                node.gain.value = 1; // Lautstärke auf 100%
-                btn.innerText = "MUTE";
-                btn.classList.remove('is-muted');
-            }
-        }
-    </script>
+        </div>
+    </footer>
 </body>
 </html>
