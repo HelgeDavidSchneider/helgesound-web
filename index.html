@@ -1,128 +1,105 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelgeSound | Electronic Live Act</title>
+    <meta name="description" content="HelgeSound — electronic live act, DJ and professional sound system for events.">
+    <title>HelgeSound — Live electronic music for unforgettable events</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="./static/live-act-game.js"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="./static/live-act-game.css">
+    <style>
+        :root { --ink: #101114; --acid: #d6f548; --paper: #f2f1ed; }
+        body { font-family: 'Manrope', sans-serif; background: var(--ink); color: var(--paper); }
+        .mono { font-family: 'DM Mono', monospace; }
+        .hero-image { background-image: linear-gradient(90deg, rgba(16,17,20,.92) 0%, rgba(16,17,20,.62) 42%, rgba(16,17,20,.1) 100%), url('./static/img/feel_free_backshot.jpg'); }
+        .grain { background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E"); pointer-events: none; }
+        .line-link { position: relative; }
+        .line-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px; background: var(--acid); transform: scaleX(0); transform-origin: right; transition: transform .3s ease; }
+        .line-link:hover::after { transform: scaleX(1); transform-origin: left; }
+        input, textarea { outline: none; }
+        input:focus, textarea:focus { border-color: var(--acid); box-shadow: 0 0 0 2px rgba(214,245,72,.1); }
+    </style>
 </head>
-
-<body class="bg-zinc-900 text-white">
-
-    <nav x-data="{ open: false }" class="fixed w-full z-50 bg-zinc-900/80 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <a href="#home" class="text-xl tracking-tighter hover:text-indigo-400 transition-colors">
-                        Helge - Live Electronics
-                    </a>
-                </div>
-
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <!--
-                        <a href="#home" class="hover:text-indigo-400 px-3 py-2 transition-colors">Home</a>
-                        <a href="#about" class="hover:text-indigo-400 px-3 py-2 transition-colors">About</a>
-                        -->
-                        <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                        <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                            <i class="fa-brands fa-soundcloud"></i>
-                        </a>
-                        <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                            <i class="fa-solid fa-envelope"></i>
-                        </a>
+<body>
+    <div class="grain fixed inset-0 z-50 opacity-30"></div>
+    <header class="absolute top-0 left-0 right-0 z-40">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-7 lg:px-10" aria-label="Main navigation">
+            <a href="#home" class="text-sm font-extrabold tracking-[-.04em] sm:text-base">HELGE<span class="text-[#d6f548]">SOUND</span><span class="text-[#d6f548]">.</span></a>
+            <div class="hidden items-center gap-8 text-[10px] font-semibold uppercase tracking-[.18em] text-white/65 md:flex">
+                <a class="line-link transition-colors hover:text-white" href="#about">About</a>
+                <a class="line-link transition-colors hover:text-white" href="#services">Services</a>
+                <a class="rounded-full border border-white/25 px-5 py-3 text-white transition-colors hover:border-[#d6f548] hover:bg-[#d6f548] hover:text-[#101114]" href="#contact">Book a show</a>
+            </div>
+            <a class="text-[#d6f548] md:hidden" href="#contact" aria-label="Book a show"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </nav>
+    </header>
+    <main id="home">
+        <section class="hero-image relative flex min-h-[760px] items-end overflow-hidden bg-cover bg-center lg:min-h-[820px]">
+            <div class="mx-auto w-full max-w-7xl px-6 pb-16 pt-40 lg:px-10 lg:pb-24">
+                <div class="max-w-3xl">
+                    <p class="mono mb-6 text-[10px] uppercase tracking-[.28em] text-[#d6f548]">Electronic live act · Saxophonist · DJ</p>
+                    <h1 class="max-w-3xl text-[clamp(3.5rem,9vw,8.5rem)] font-extrabold leading-[.88] tracking-[-.08em]">Sound that<br><span class="text-[#d6f548]">moves people.</span></h1>
+                    <div class="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+                        <p class="max-w-sm text-sm leading-7 text-white/70">I build immersive nights from the first note to the last track — live electronic music, DJ energy and the sound to carry it all.</p>
+                        <a href="#contact" class="group flex w-fit items-center gap-4 text-[10px] font-bold uppercase tracking-[.2em]">Start a conversation <span class="flex h-11 w-11 items-center justify-center rounded-full bg-[#d6f548] text-[#101114] transition-transform group-hover:rotate-45"><i class="fa-solid fa-arrow-up-right"></i></span></a>
                     </div>
                 </div>
-
-                <!--
-                <div class="md:hidden flex items-center">
-                    <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-zinc-800 focus:outline-none">
-                        <svg class="h-6 w-6" :class="{'hidden': open, 'block': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg class="h-6 w-6" :class="{'block': open, 'hidden': !open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+            </div>
+            <div class="absolute bottom-8 right-6 hidden items-center gap-4 lg:flex lg:right-10"><span class="mono text-[9px] uppercase tracking-[.25em] text-white/50">Scroll to explore</span><span class="h-px w-16 bg-white/35"></span></div>
+        </section>
+        <section id="about" class="bg-[#f2f1ed] py-24 text-[#101114] lg:py-36">
+            <div class="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[.8fr_1.2fr] lg:gap-24 lg:px-10">
+                <div><p class="mono mb-6 text-[10px] uppercase tracking-[.25em] text-black/45">01 / About me</p><h2 class="max-w-md text-5xl font-extrabold leading-[.95] tracking-[-.07em] sm:text-6xl">A decade of chasing the right <span class="text-[#849b00]">feeling.</span></h2></div>
+                <div class="grid gap-10 sm:grid-cols-[1fr_.75fr] sm:items-end">
+                    <div><p class="text-xl font-semibold leading-relaxed tracking-[-.03em]">For the past ten years, I’ve been turning sound into something you can feel.</p><p class="mt-6 max-w-md text-sm leading-7 text-black/60">My sets move between deep electronic grooves, live improvisation and the unexpected. I play saxophone and piano during my live performance, shape the room as a DJ and bring a sense of occasion to every event — from a close ceremony to a full dancefloor.</p></div>
+                    <div class="relative overflow-hidden rounded-sm"><img src="./static/img/dj_attilla_smile.jpg" alt="Helge smiling while DJing" class="aspect-[4/5] w-full object-cover"><span class="mono absolute bottom-4 left-4 bg-[#d6f548] px-2 py-1 text-[9px] uppercase tracking-widest">Live / 2026</span></div>
                 </div>
-                -->
-            </div>
-        </div>
-
-        <div x-show="open"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 -translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="md:hidden bg-zinc-900 border-b border-white/10">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Home</a>
-                <a href="#loops" @click="open = false" class="block px-3 py-2 rounded-md hover:bg-zinc-800">Loops</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Added top padding (pt-24) to account for the fixed navbar -->
-    <main class="pt-24 pb-16 min-h-screen flex flex-col justify-center">
-
-        <!-- Video Container -->
-        <section class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(99,102,241,0.15)] border border-white/10 bg-black transition-transform duration-500 hover:scale-[1.01]">
-                <iframe
-                    class="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/mPBdemBxYdo?si=PkiqAkAzstnR8zwb"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                </iframe>
             </div>
         </section>
-
+        <section id="services" class="bg-[#101114] py-24 lg:py-36">
+            <div class="mx-auto max-w-7xl px-6 lg:px-10">
+                <div class="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><p class="mono mb-6 text-[10px] uppercase tracking-[.25em] text-[#d6f548]">02 / Services</p><h2 class="max-w-2xl text-5xl font-extrabold leading-[.95] tracking-[-.07em] sm:text-7xl">One artist.<br><span class="text-white/35">The whole experience.</span></h2></div><p class="max-w-xs text-sm leading-7 text-white/50">One clear point of contact, and a carefully built atmosphere from arrival to encore.</p></div>
+                <div class="grid border-t border-white/15 md:grid-cols-3">
+                    <article class="group border-b border-white/15 py-8 md:border-b-0 md:border-r md:pr-10"><span class="mono text-xs text-[#d6f548]">01</span><div class="mt-16 flex items-start justify-between gap-4"><h3 class="text-2xl font-bold tracking-[-.04em]">Live act & DJ</h3><i class="fa-solid fa-arrow-up-right-from-square text-[#d6f548] transition-transform group-hover:rotate-45"></i></div><p class="mt-5 text-sm leading-7 text-white/50">Live electronic music with saxophone, followed by a DJ set that carries the night wherever it needs to go. Original piano music is also available for ceremonies and quieter moments.</p></article>
+                    <article class="group border-b border-white/15 py-8 md:border-b-0 md:border-r md:px-10"><span class="mono text-xs text-[#d6f548]">02</span><div class="mt-16 flex items-start justify-between gap-4"><h3 class="text-2xl font-bold tracking-[-.04em]">Sound, light & atmosphere</h3><i class="fa-solid fa-arrow-up-right-from-square text-[#d6f548] transition-transform group-hover:rotate-45"></i></div><p class="mt-5 text-sm leading-7 text-white/50">A carefully tuned setup for up to 200 people on the dancefloor, with a powerful sound system, professional lighting, fog and speech microphones. I bring everything you need, so there is no additional equipment rental to arrange.</p></article>
+                    <article class="group py-8 md:pl-10"><span class="mono text-xs text-[#d6f548]">03</span><div class="mt-16 flex items-start justify-between gap-4"><h3 class="text-2xl font-bold tracking-[-.04em]">Complete event support</h3><i class="fa-solid fa-arrow-up-right-from-square text-[#d6f548] transition-transform group-hover:rotate-45"></i></div><p class="mt-5 text-sm leading-7 text-white/50">Delivery, installation, soundcheck, on-site technical support, event coordination and pack-down after the last song.</p></article>
+                </div>
+                <div class="mt-16 grid gap-6 lg:grid-cols-[1.4fr_1fr]"><!-- Rollback image: <img src="./static/img/wedding_ceremony_piano.jpg" alt="Helge playing piano at a wedding ceremony" class="h-72 w-full object-cover object-center lg:h-96"> --><div class="relative h-72 overflow-hidden bg-black lg:h-96"><iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/mPBdemBxYdo?si=PkiqAkAzstnR8zwb" title="HelgeSound live performance" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><div class="flex flex-col justify-between bg-[#1b1d20] p-8 lg:p-10"><p class="mono text-[10px] uppercase tracking-[.25em] text-white/40">For venues, brands & celebrations</p><p class="max-w-sm text-2xl font-semibold leading-tight tracking-[-.04em]">You bring the occasion. I bring the sound, the energy and the details that make it memorable.</p><a class="line-link w-fit text-[10px] font-bold uppercase tracking-[.2em] text-[#d6f548]" href="#contact">Tell me about your event</a></div></div>
+            </div>
+        </section>
+        <section id="contact" class="bg-[#d6f548] py-24 text-[#101114] lg:py-36">
+            <div class="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[.9fr_1.1fr] lg:gap-24 lg:px-10">
+                <div><p class="mono mb-6 text-[10px] uppercase tracking-[.25em] text-black/55">03 / Contact</p><figure class="max-w-md overflow-hidden"><img src="./static/img/dj_grain.jpg" alt="Helge DJing at a live event" class="aspect-[3/2] w-full object-cover"><figcaption class="mono mt-3 text-[9px] uppercase tracking-[.2em] text-black/50">Somewhere between the first track and the last.</figcaption></figure><p class="mt-10 max-w-sm text-sm leading-7 text-black/65">Have a date, a place or just an idea? Tell me what you are planning. I’d love to hear what you want the night to feel like.</p><a href="mailto:hi@helgesound.de" class="mt-8 inline-block font-bold underline decoration-1 underline-offset-8">hi@helgesound.de</a></div>
+                <!-- Contact form temporarily disabled; replace this block with FormSubmit later.
+                <form action="mailto:hi@helgesound.de" method="post" enctype="text/plain" class="space-y-7"><div class="grid gap-7 sm:grid-cols-2"><label class="block"><span class="mono text-[9px] uppercase tracking-[.2em] text-black/55">Your name</span><input required type="text" name="name" placeholder="Your name" class="mt-3 w-full border-b border-black/30 bg-transparent py-3 text-sm placeholder:text-black/35"></label><label class="block"><span class="mono text-[9px] uppercase tracking-[.2em] text-black/55">Email address</span><input required type="email" name="email" placeholder="hello@example.com" class="mt-3 w-full border-b border-black/30 bg-transparent py-3 text-sm placeholder:text-black/35"></label></div><label class="block"><span class="mono text-[9px] uppercase tracking-[.2em] text-black/55">Event details</span><textarea required name="message" rows="4" placeholder="Date, location, format — tell me a little about it..." class="mt-3 w-full resize-none border-b border-black/30 bg-transparent py-3 text-sm placeholder:text-black/35"></textarea></label><button type="submit" class="group flex items-center gap-4 bg-[#101114] px-6 py-4 text-[10px] font-bold uppercase tracking-[.2em] text-white transition hover:bg-white hover:text-[#101114]">Send inquiry <span class="transition-transform group-hover:translate-x-1">→</span></button></form>
+                -->
+            </div>
+        </section>
     </main>
-
-    <footer class="bg-zinc-900 text-zinc-400 py-12 px-6 lg:px-8 border-t border-white/5">
-        <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
-
-            <div class="w-full py-10 border-b border-white/5">
+    <footer class="bg-[#101114] py-12 text-zinc-400">
+        <div class="mx-auto flex max-w-4xl flex-col items-center px-6 text-center lg:px-8">
+            <div class="w-full border-b border-white/5 py-10">
                 <div class="flex justify-center space-x-10 text-xl">
-                    <a href="https://www.instagram.com/helge.techno/" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@helge.techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    <a href="https://soundcloud.com/helge_techno" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                        <i class="fa-brands fa-soundcloud"></i>
-                    </a>
-                    <a href="mailto:hi@helgesound.de" class="hover:text-white transition-transform hover:scale-110 duration-300">
-                        <i class="fa-solid fa-envelope"></i>
-                    </a>
+                    <a href="https://www.instagram.com/helgesound/" class="transition-transform duration-300 hover:scale-110 hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@helgesound" class="transition-transform duration-300 hover:scale-110 hover:text-white"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://soundcloud.com/helgesound" class="transition-transform duration-300 hover:scale-110 hover:text-white"><i class="fa-brands fa-soundcloud"></i></a>
+                    <a href="mailto:hi@helgesound.de" class="transition-transform duration-300 hover:scale-110 hover:text-white"><i class="fa-solid fa-envelope"></i></a>
                 </div>
             </div>
-
-            <div class="w-full pt-10 space-y-6">
-                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+            <div class="w-full pt-10">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-widest">
                     <a href="./impressum.html" class="hover:text-white">Impressum</a>
                     <a href="./datenschutz.html" class="hover:text-white">Datenschutz</a>
                 </div>
             </div>
-            <div class="w-full pt-10 space-y-6">
-                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 uppercase tracking-widest text-[10px]">
+            <div class="w-full pt-10">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-widest">
                     <span class="text-zinc-600">© 2026 HelgeSound</span>
                 </div>
             </div>
-
         </div>
     </footer>
 </body>
